@@ -12,6 +12,8 @@ public class GameManager : MonoSingleTon<GameManager>
     public int Score    { get; set; }
     public int Combo    { get; set; }
     public bool Pause   { get; set; }
+    public bool PopStart { get; set; }
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -31,5 +33,6 @@ public class GameManager : MonoSingleTon<GameManager>
         Score = 0;
         Combo = 0;
         Pause = false;
+        PopStart = false;
     }
 }

@@ -19,6 +19,22 @@ public class InputManager : MonoBehaviour
         {
             isPushed = true;
         }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isPushed = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (GameManager.Instance.PopStart)
+            {
+                GameManager.Instance.PopStart = false;
+            }
+            else
+            {
+                GameManager.Instance.PopStart = true;
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
