@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
             {
                 timer = 0;
                 //GameObject.find
-                if (Bars[2].sizeDelta.y > 35f)//average
+                if (Bars[2].sizeDelta.y > 40f)//average
                 {
                     Debug.Log("boom");
                     MSD.Append("M,");
