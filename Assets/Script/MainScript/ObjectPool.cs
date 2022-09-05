@@ -23,23 +23,23 @@ public class ObjectPool : MonoSingleTon<ObjectPool>
         //bulletPrefab = Resources.Load<GameObject>("Bullet");
     }
 
-    public GameObject PopObject(Vector3 position)//, string name)
+    public GameObject PopObject(Vector3 position, GameObject prefab)//, string name)
     {
         GameObject instObject = null;
 
         if (objectPool.Count == 0)
         {
-            instObject = Instantiate(meleeNotePrefab,this.transform);
-            instObject.transform.position = position;
-            instObject.transform.rotation = Quaternion.identity;
+            instObject = Instantiate(prefab, position, Quaternion.identity,this.transform);
             instObject.gameObject.SetActive(true);
             return instObject;
         }
-
-        instObject = objectPool.Dequeue();
-        instObject.transform.position = position;
-        instObject.transform.rotation = Quaternion.identity;
-        instObject.gameObject.SetActive(true);
+        else
+        {
+            instObject = objectPool.Dequeue();
+            instObject.transform.position = position;
+            instObject.transform.rotation = Quaternion.identity;
+            instObject.gameObject.SetActive(true);
+        }
 
         return instObject;
     }

@@ -9,6 +9,8 @@ public class GameManager : MonoSingleTon<GameManager>
 
     //variable value
     public float Health { get; set; }
+    public float Volum { get; set; }
+    public float SyncDelay { get; set; }
     public int Score    { get; set; }
     public int Combo    { get; set; }
     public bool Pause   { get; set; }
@@ -18,6 +20,7 @@ public class GameManager : MonoSingleTon<GameManager>
     // Start is called before the first frame update
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         Init();
     }
 

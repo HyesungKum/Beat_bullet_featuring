@@ -12,12 +12,22 @@ public class PopZone : MonoBehaviour
 
     [SerializeField] public TextAsset SheetMusicNote;
 
+    GameObject tutorialPopZone;
+
+    GameObject meleeNotePrefab;
+    GameObject metronomPrefab;
+
     //variable value
     private float timer;
 
     // Start is called before the first frame update
     private void Awake()
     {
+        tutorialPopZone = GameObject.Find("TutorialPopZone");
+
+        meleeNotePrefab = Resources.Load<GameObject>("MeleeNote");
+        metronomPrefab = Resources.Load<GameObject>("MetronomNote");
+
         popTime = (60f / BPM) * (tempo1 / tempo2);
         timer = 0f;
     }
@@ -25,14 +35,15 @@ public class PopZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!GameManager.Instance.PopStart) return;
-        //
-        //timer += Time.deltaTime;
-        //
-        //if (timer > popTime)
-        //{
-        //    timer = 0f;
-        //    ObjectPool.Instance.PopObject(transform.position);
-        //}
+        if (tutorialPopZone != null)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= popTime)
+            {
+                timer = 0f;
+                ObjectPool.Instance.PopObject(tutorialPopZone.transform.position,metronomPrefab);
+            }
+        }
     }
 }

@@ -13,6 +13,8 @@ public class DevelopManager : MonoBehaviour
 
     AudioSource music;
 
+    GameObject prefab;
+
     [SerializeField] private float delay = 1f;
 
     // Start is called before the first frame update
@@ -21,6 +23,8 @@ public class DevelopManager : MonoBehaviour
         popPosition = GameObject.Find("PopZone").GetComponent<Transform>();
         music = GetComponent<AudioSource>();
         music.clip = Resources.Load<AudioClip>("ImagineDragonsEnemy");
+
+        prefab = Resources.Load<GameObject>("MeleeNote");
 
         count = 0;
         timer = 0f;
@@ -64,7 +68,7 @@ public class DevelopManager : MonoBehaviour
 
             if (note[count] == "M")
             {
-                ObjectPool.Instance.PopObject(popPosition.position);    
+                ObjectPool.Instance.PopObject(popPosition.position, prefab);    
             }
 
             count++;

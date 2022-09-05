@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4133858283077596424}
   - component: {fileID: -8822595427266607519}
   m_Layer: 0
-  m_Name: MeleeNote
+  m_Name: MetronomNote
   m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7309347808623173781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.39, y: -0.03, z: 0}
-  m_LocalScale: {x: 0.4, y: 3, z: 1}
+  m_LocalScale: {x: 17.211628, y: 67.44859, z: 3.3798656}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86f5073fdaa4a34986ff28c1395a896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noteSpeed: 30
+  noteSpeed: 600
 --- !u!61 &-4133858283077596424
 BoxCollider2D:
   m_ObjectHideFlags: 0

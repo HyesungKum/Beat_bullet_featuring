@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
 
     StringBuilder MSD;
 
+    GameObject prefab;
+
     float timer = 0f;
     bool started = false;
 
@@ -24,6 +26,8 @@ public class UIManager : MonoBehaviour
         audio = FindObjectOfType<AudioManager>();
         MSD = new StringBuilder();
         popPosition = GameObject.Find("PopZone").GetComponent<Transform>();
+
+        prefab = Resources.Load<GameObject>("MeleeNote");
         //for (int i = 0; i < 7; i++)
         //{
         //    string name = "Bar" + i.ToString();
@@ -70,7 +74,7 @@ public class UIManager : MonoBehaviour
                 {
                     Debug.Log("boom");
                     MSD.Append("M,");
-                    ObjectPool.Instance.PopObject(popPosition.position);
+                    ObjectPool.Instance.PopObject(popPosition.position, prefab);
                 }
                 else
                 {

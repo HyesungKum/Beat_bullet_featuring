@@ -5,7 +5,6 @@ using UnityEngine;
 public class Note : MonoBehaviour
 {
     [SerializeField] private float noteSpeed = 30f;
-    Camera cam;
 
     float time = 0f;
 
@@ -21,7 +20,6 @@ public class Note : MonoBehaviour
     }
     private void Awake()
     {
-        cam = GameObject.Find("MainCamera").GetComponent<Camera>();
         NoteState = (int)State.None;
         //time = Time.time; need to check changed note bar
     }

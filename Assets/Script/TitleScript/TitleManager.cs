@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleManager : MonoBehaviour
+public class TitleManager : MonoSingleTon<TitleManager>
 {
     //components
     Cursor cursor;
@@ -25,6 +25,9 @@ public class TitleManager : MonoBehaviour
     //variable value
     private float coroutineTimer = 0f;
 
+    public bool IsTutorial { get; set; }
+    public bool IsOption { get; set; }
+
     enum MenuIndex
     {
         Start,
@@ -32,11 +35,6 @@ public class TitleManager : MonoBehaviour
         Option,
         Exit,
         Max
-    }
-
-    enum ViewIndex
-    {
-        
     }
 
     private void Awake()
@@ -56,6 +54,9 @@ public class TitleManager : MonoBehaviour
         initPosition = cursor.transform.position;
 
         cursorIndex = (int)MenuIndex.Start;
+
+        IsTutorial = false;
+        IsOption = false;
     }
 
     // Update is called once per frame
@@ -72,34 +73,12 @@ public class TitleManager : MonoBehaviour
             
             cursorIndex++;
             if (cursorIndex == 4) cursorIndex = 0;
-
-            if (cursorIndex == 1)
-            {
-                optionUI.SetActive(false);
-                tutorialUI.SetActive(true);
-            }
-            if (cursorIndex == 2)
-            {
-                optionUI.SetActive(true);
-                tutorialUI.SetActive(false);
-            }
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
 
             cursorIndex--;
             if (cursorIndex == -1) cursorIndex = 3;
-
-            if (cursorIndex == 1)
-            {
-                optionUI.SetActive(false);
-                tutorialUI.SetActive(true);
-            }
-            if (cursorIndex == 2)
-            {
-                optionUI.SetActive(true);
-                tutorialUI.SetActive(false);
-            }
         }
 
         cursor.transform.position = initPosition + Vector2.down * cursorIndex * 100f;
@@ -114,10 +93,14 @@ public class TitleManager : MonoBehaviour
             }
             else if(cursorIndex == (int)MenuIndex.Tutorial)
             {
+                tutorialUI.SetActive(true);
+                IsTutorial = true;
                 Invoke("MoveNextView", 1.5f); 
             }
             else if (cursorIndex == (int)MenuIndex.Option)
             {
+                optionUI.SetActive(true);
+                IsOption = true;
                 Invoke("MoveNextView", 1.5f);
             }
             else 
@@ -127,6 +110,10 @@ public class TitleManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            IsTutorial = false;
+            IsOption = false;
+            optionUI.SetActive(false);
+            tutorialUI.SetActive(false);
             nextViewPosition.SetActive(false);
         }
     }
