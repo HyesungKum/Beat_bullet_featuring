@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
+    //components
+    Transform mainCamTransform;
+    
+    //constant value
     [SerializeField] private float noteSpeed = 30f;
+    private Vector2 initCamTransform;
+
+    //variable value
 
     float time = 0f;
 
+    
     public int NoteState { get; set; }
 
     private enum State
@@ -21,10 +29,10 @@ public class Note : MonoBehaviour
     private void Awake()
     {
         NoteState = (int)State.None;
-        //time = Time.time; need to check changed note bar
+        mainCamTransform = GameObject.Find("MainCamera").GetComponent<Transform>();
+        initCamTransform = mainCamTransform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(-transform.right * noteSpeed * Time.deltaTime);
@@ -68,7 +76,7 @@ public class Note : MonoBehaviour
     {
         if (this.NoteState == (int)State.Bad)
         {
-            
+            //StartCoroutine(camshaking());
             GameManager.Instance.Combo = 0;
         }
         else
@@ -78,11 +86,8 @@ public class Note : MonoBehaviour
         ObjectPool.Instance.PushObject(gameObject);
     }
 
-    IEnumerator camshaking()
-    {
-        while (true)
-        {
-            //cam.transform.position = Vector2.Lerp(cam.transform.position, Random.Range(-1f, 1f));
-        }
-    }
+    //IEnumerator camshaking()
+    //{
+    //    bool flag = true;
+    //}
 }

@@ -29,7 +29,7 @@ public class ObjectPool : MonoSingleTon<ObjectPool>
 
         if (objectPool.Count == 0)
         {
-            instObject = Instantiate(prefab, position, Quaternion.identity,this.transform);
+            instObject = Instantiate(prefab, position, Quaternion.identity, this.transform);
             instObject.gameObject.SetActive(true);
             return instObject;
         }

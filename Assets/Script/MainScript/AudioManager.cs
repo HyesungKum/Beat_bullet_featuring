@@ -29,14 +29,13 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             audioSource.Stop();
             audioSource.PlayOneShot(turnTableSkrech);
 
             if (flag)
             {
-                //StartCoroutine(Metronom());
                 flag = false;
             }
 
@@ -59,16 +58,6 @@ public class AudioManager : MonoBehaviour
         else
         {
             PlayMusic();
-        }
-    }
-
-    IEnumerator Metronom()
-    {
-        while (true)
-        {
-            audioSource.PlayOneShot(metronom);
-
-            yield return new WaitForSeconds(60f / 142f);
         }
     }
 

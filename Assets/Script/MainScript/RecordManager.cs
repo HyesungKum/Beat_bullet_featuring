@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System;
 
-public class UIManager : MonoBehaviour
+public class RecordManager : MonoBehaviour
 {
     private AudioManager audio;
     float[] spectrum = new float[64];
@@ -91,59 +91,5 @@ public class UIManager : MonoBehaviour
             File.WriteAllText(path, MSD.ToString());
 
         }
-
-        Debug.Log(audio.GetComponent<AudioSource>().isPlaying);
     }
 }
-
-//public class CSVWriter
-//{
-//    public static void Write(List<List<object>> dataList, string fileName)
-//    {
-//        int dataCount = dataList.Count;
-//        List<List<string>> output = new List<List<string>>();
-//
-//        for (int i = 0; i < dataCount; i++)
-//        {
-//            List<string> lines = new List<string>();
-//            for (int j = 0; j < dataList[i].Count; j++)
-//            {
-//                string strData = dataList[i][j].ToString();
-//                lines.Add(strData);
-//            }
-//            output.Add(lines);
-//        }
-//
-//        int length = output[0].Count;
-//        string delimiter = ",";
-//        StringBuilder sb = new StringBuilder();
-//
-//        for (int index = 0; index < length; index++)
-//            sb.AppendLine(string.Join(delimiter, output[index]));
-//
-//        string filePath = GetPath();
-//        if (!Directory.Exists(filePath))
-//        {
-//            Directory.CreateDirectory(filePath);
-//        }
-//        fileName += ".csv";
-//
-//
-//        StreamWriter outStream = System.IO.File.CreateText(filePath + fileName);
-//        outStream.WriteLine(sb);
-//        outStream.Close();
-//    }
-//
-//    private static string GetPath()
-//    {
-//#if UNITY_EDITOR
-//        return Application.dataPath + "/Resources/CSV/";
-//#elif UNITY_ANDROID
-//        return Application.persistentDataPath + "/Resources/CSV/";
-//#elif UNITY_IPHONE
-//        return Application.persistentDataPath +"/Resources/CSV/";
-//#else
-//        return Application.dataPath +"/Resources/CSV/";
-//#endif
-//    }
-//}

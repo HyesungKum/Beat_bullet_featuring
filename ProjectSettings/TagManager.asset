@@ -9,6 +9,7 @@ TagManager:
   - GoodZone
   - Note
   - BadZone
+  - LoadingText
   layers:
   - Default
   - TransparentFX

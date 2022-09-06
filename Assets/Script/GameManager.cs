@@ -27,7 +27,6 @@ public class GameManager : MonoSingleTon<GameManager>
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Combo);
     }
 
     private void Init()
