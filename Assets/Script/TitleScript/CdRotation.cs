@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CdRotation : MonoBehaviour
 {
-    [SerializeField] float rotateSpeed = 0.2f;
+    [SerializeField] float rotateSpeed = 0.1f;
 
     void Update()
     {

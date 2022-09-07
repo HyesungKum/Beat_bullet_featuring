@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System.IO;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    //components
+    TextMeshProUGUI healthText;
+    TextMeshProUGUI comboText;
+
     private AudioSource audio;
     float[] spectrum = new float[64];
 
@@ -20,9 +25,13 @@ public class UIManager : MonoBehaviour
 
     float timer = 0f;
     bool started = false;
+    [SerializeField] bool loadMode = true;
 
     void Start()
     {
+        healthText = GameObject.Find("Health").GetComponent<TextMeshProUGUI>();
+        comboText = GameObject.Find("Combo").GetComponent<TextMeshProUGUI>();
+
         audio = GameObject.Find("LoadNoteManager").GetComponent<AudioSource>();
         MSD = new StringBuilder();
         popPositionR = GameObject.Find("PopZoneR").GetComponent<Transform>();
@@ -43,7 +52,14 @@ public class UIManager : MonoBehaviour
     {
         timer += Time.deltaTime;
         FFTBar();
-        //Recording();
+        if (!loadMode)
+        {
+            Recording();
+        }
+
+        healthText.text = "Health" + GameManager.Instance.Health.ToString();
+        comboText.text = "Combo" + GameManager.Instance.Combo.ToString();
+        GameManager.Instance.Score += (int)(GameManager.Instance.Health / 10f + Time.deltaTime + GameManager.Instance.Combo);
     }
 
     private void FFTBar()
@@ -71,12 +87,10 @@ public class UIManager : MonoBehaviour
                     if (Random.Range(0, 3) > 1)
                     {
                         MSD.Append("RM,");
-                        ObjectPool.Instance.PopObject(popPositionR.position, prefab, "meleeNote");
                     }
                     else
                     {
                         MSD.Append("LM,");
-                        ObjectPool.Instance.PopObject(popPositionL.position, prefab, "meleeNote");
                     }
 
                 }
@@ -85,18 +99,15 @@ public class UIManager : MonoBehaviour
                     if (Random.Range(0, 2) > 1)
                     {
                         MSD.Append("RD,");
-                        ObjectPool.Instance.PopObject(popPositionR.position, prefab, "meleeNote");
                     }
                     else
                     {
                         MSD.Append("LD,");
-                        ObjectPool.Instance.PopObject(popPositionR.position, prefab, "meleeNote");
                     }
                 }
                 else if (Bars[6].sizeDelta.y > 20f)
                 {
                     MSD.Append("D,");
-                    ObjectPool.Instance.PopObject(popPositionR.position, prefab, "meleeNote");
                 }
                 else
                 {

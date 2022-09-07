@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoSingleTon<GameManager>
 {
+    //components
+
     //constant value
     [SerializeField] float maxHealth = 100f;
 

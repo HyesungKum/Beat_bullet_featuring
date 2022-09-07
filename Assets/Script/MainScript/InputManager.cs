@@ -24,7 +24,9 @@ public class InputManager : MonoBehaviour
     float timer = 0f;
 
     //variable value
-    bool isPushed = false;
+    bool RisPushed = false;
+    bool LisPushed = false;
+    bool DisPushed = false;
 
     private void Awake()
     {
@@ -58,30 +60,50 @@ public class InputManager : MonoBehaviour
         //main key input
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            isPushed = true;
+            RisPushed = true;
             StartCoroutine(UsedRight());
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            isPushed = false;
+            RisPushed = false;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            LisPushed = true;
             StartCoroutine(UsedLeft());
+        }
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            LisPushed = false;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
+            DisPushed = true;
             StartCoroutine(UsedLeftDodge());
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            DisPushed = false;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
+            DisPushed = true;
             StartCoroutine(UsedDodge());
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            DisPushed = false;
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
+            DisPushed = true;
             StartCoroutine(UsedRightDodge());
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            DisPushed = false;
         }
     }
     #region NodeMotion
@@ -187,16 +209,31 @@ public class InputManager : MonoBehaviour
             }
         }
     }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isPushed)
+        if (RisPushed)
         {
-            if (collision.CompareTag("Note"))
+            if (collision.CompareTag("RNote"))
             {
                 collision.SendMessage("Check", SendMessageOptions.DontRequireReceiver);
             }
-            isPushed = false;
+            RisPushed = false;
+        }
+        if (LisPushed)
+        {
+            if (collision.CompareTag("LNote"))
+            {
+                collision.SendMessage("Check", SendMessageOptions.DontRequireReceiver);
+            }
+            LisPushed = false;
+        }
+        if (DisPushed)
+        {
+            if (collision.CompareTag("Dodge"))
+            {
+                collision.SendMessage("Check", SendMessageOptions.DontRequireReceiver);
+            }
+            DisPushed = false;
         }
     }
 

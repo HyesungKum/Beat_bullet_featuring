@@ -47,7 +47,7 @@ public class LoadNoteManager : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (LoadMode)
         {
@@ -59,11 +59,11 @@ public class LoadNoteManager : MonoBehaviour
             timer += Time.deltaTime;
 
             LoadMSD();
-            Debug.Log("ready");
 
             if (onetimeFlag)
             {
                 Invoke("MusicStart", delay);
+                //Invoke("DrumStart", delay);
                 onetimeFlag = false;
             }
         }
@@ -74,6 +74,7 @@ public class LoadNoteManager : MonoBehaviour
             if (onetimeFlag)
             {
                 MusicStart();
+                //DrumStart();
                 onetimeFlag = false;
             }
         }
@@ -81,8 +82,14 @@ public class LoadNoteManager : MonoBehaviour
 
     private void MusicStart()
     {
-        Debug.Log("go");
+        music.clip = Resources.Load<AudioClip>("ImagineDragonsEnemy");
         music.Play();
+    }
+    private void DrumStart()
+    {
+        AudioSource drumAudio = GameObject.Find("DrumAudio").GetComponent<AudioSource>();
+        drumAudio.clip = Resources.Load<AudioClip>("EnemyDurm");
+        drumAudio.Play();
     }
     private void LoadNoteDataFile()
     {
@@ -95,7 +102,6 @@ public class LoadNoteManager : MonoBehaviour
         if (timer > ((60f / 142f) * 0.5f))
         {
             timer = 0f;
-
             if (note[count] == "RM")
             {
                 ObjectPool.Instance.PopObject(popPositionR.position, RMPrefab, "meleeNote");    
@@ -106,16 +112,16 @@ public class LoadNoteManager : MonoBehaviour
             }
             else if (note[count] == "LD")
             {
-                ObjectPool.Instance.PopObject(popPositionL.position, LDPrefab, "DodgeNote");
+                ObjectPool.Instance.PopObject(popPositionL.position, LDPrefab, "meleeNote");
             }
             else if (note[count] == "RD")
             {
-                ObjectPool.Instance.PopObject(popPositionR.position, RDPrefab, "DodgeNote");
+                ObjectPool.Instance.PopObject(popPositionR.position, RDPrefab, "meleeNote");
             }
-            //else if (note[count] == "D")
-            //{
-            //    ObjectPool.Instance.PopObject(popPositionR.position, DPrefab, "DodgeNote");
-            //}
+            else if (note[count] == "D")
+            {
+                ObjectPool.Instance.PopObject(popPositionR.position, RDPrefab, "meleeNote");
+            }
 
             count++;
         }

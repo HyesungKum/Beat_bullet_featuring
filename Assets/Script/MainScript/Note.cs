@@ -18,7 +18,6 @@ public class Note : MonoBehaviour
     private Vector2 initCamTransform;
 
     //variable value
-
     float time = 0f;
 
     public int NoteState { get; set; }
@@ -75,7 +74,11 @@ public class Note : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("DeadZone"))
+        if ((gameObject.tag != "Dodge") && collision.CompareTag("DeadZone") || collision.CompareTag("LimitZone"))
+        {
+            ObjectPool.Instance.PushObject(gameObject, "meleeNote");
+        }
+        if ((gameObject.tag == "Dodge") && collision.CompareTag("LimitZone"))
         {
             ObjectPool.Instance.PushObject(gameObject, "meleeNote");
         }
@@ -83,34 +86,60 @@ public class Note : MonoBehaviour
 
     private void Check()
     {
-        if (this.NoteState == (int)State.Bad)
+        if (gameObject.tag == "Dodge")
         {
-            //StartCoroutine(camshaking());
-            Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+            if (this.NoteState == (int)State.Bad)//justtiming dodge
+            {
+                Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
 
-            ObjectPool.Instance.PopObject(textPosition, badPrefab, "checkBadText");
+                ObjectPool.Instance.PopObject(textPosition, exellentPrefab, "checkExText");
 
-            GameManager.Instance.Combo = 0;
+                GameManager.Instance.Combo++;
+                GameManager.Instance.Health += 1f;
+            }
+            else//dodge fail
+            {
+                Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+                ObjectPool.Instance.PopObject(textPosition, badPrefab, "checkBadText");
+
+                GameManager.Instance.Combo = 0;
+                GameManager.Instance.Health -= 5f;
+            }
         }
-        else if (this.NoteState == (int)State.Good)
+        else
         {
-            Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+            if (this.NoteState == (int)State.Bad)
+            {
+                //StartCoroutine(camshaking());
+                Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
 
-            ObjectPool.Instance.PopObject(textPosition, goodPrefab, "checkGoodText");
+                ObjectPool.Instance.PopObject(textPosition, badPrefab, "checkBadText");
 
-            GameManager.Instance.Combo++;
+                GameManager.Instance.Combo = 0;
+                GameManager.Instance.Health -= 5f;
+            }
+            else if (this.NoteState == (int)State.Good)
+            {
+                Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+                ObjectPool.Instance.PopObject(textPosition, goodPrefab, "checkGoodText");
+
+                GameManager.Instance.Combo++;
+                GameManager.Instance.Health += 1f;
+            }
+            else if (this.NoteState == (int)State.Exellent)
+            {
+                Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+                ObjectPool.Instance.PopObject(textPosition, exellentPrefab, "checkExText");
+
+                GameManager.Instance.Combo++;
+                GameManager.Instance.Health += 1f;
+            }
+            ObjectPool.Instance.PushObject(gameObject, "meleeNote");
         }
-        else if (this.NoteState == (int)State.Exellent)
-        {
-            Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-
-            ObjectPool.Instance.PopObject(textPosition, exellentPrefab, "checkExText");
-
-            GameManager.Instance.Combo++;
-        }
-        ObjectPool.Instance.PushObject(gameObject, "meleeNote");
     }
-
     //IEnumerator camshaking()
     //{
     //    bool flag = true;

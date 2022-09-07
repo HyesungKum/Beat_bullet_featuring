@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8822595427266607519}
   m_Layer: 0
   m_Name: DodgeNoteR
-  m_TagString: Note
+  m_TagString: Dodge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
