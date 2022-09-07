@@ -23,7 +23,6 @@ public class TitleManager : MonoSingleTon<TitleManager>
     [SerializeField] private float exitTime = 1f;
 
     //variable value
-    private float coroutineTimer = 0f;
 
     public bool IsTutorial { get; set; }
     public bool IsOption { get; set; }

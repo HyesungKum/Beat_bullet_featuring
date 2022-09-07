@@ -15,9 +15,11 @@ public class TutorialManger : MonoBehaviour
     [SerializeField] AnimationCurve nodePulseCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 0f), new Keyframe(1f, 500f) });
     [SerializeField] AnimationCurve RLPulseCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0f, 0f), new Keyframe(1f, 500f) });
 
-    //
+    //components
+    Transform tutorialPopZone;
     AudioSource audioSource;
     [SerializeField] AudioClip metronom;
+    GameObject metronomNote;
 
     float timer = 0f;
 
@@ -29,7 +31,9 @@ public class TutorialManger : MonoBehaviour
         playerLeft = GameObject.Find("PlayerLeft").GetComponent<Transform>();
         playerRight = GameObject.Find("PlayerRight").GetComponent<Transform>();
 
+        tutorialPopZone = GameObject.Find("TutorialPopZone").GetComponent<Transform>();
         audioSource = GetComponent<AudioSource>();
+        metronomNote = Resources.Load<GameObject>("MetronomNote");
     }
     void Start()
     {
@@ -57,6 +61,8 @@ public class TutorialManger : MonoBehaviour
                 timer = 0f;
                 audioSource.clip = metronom;
                 audioSource.PlayOneShot(metronom);
+
+                ObjectPool.Instance.PopObject(tutorialPopZone.position, metronomNote, "meleeNote");
             }
 
 

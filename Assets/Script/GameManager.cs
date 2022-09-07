@@ -11,11 +11,12 @@ public class GameManager : MonoSingleTon<GameManager>
     public float Health { get; set; }
     public float Volum { get; set; }
     public float SyncDelay { get; set; }
+    public int MusicIndex { get; set; }
     public int Score    { get; set; }
     public int Combo    { get; set; }
     public bool Pause   { get; set; }
     public bool PopStart { get; set; }
-
+    public bool SelectMusicSquence { get; set; }
 
     // Start is called before the first frame update
     private void Awake()
@@ -36,5 +37,6 @@ public class GameManager : MonoSingleTon<GameManager>
         Combo = 0;
         Pause = false;
         PopStart = false;
+        SelectMusicSquence = true;
     }
 }

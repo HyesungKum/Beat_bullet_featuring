@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class Note : MonoBehaviour
 {
     //components
     Transform mainCamTransform;
-    
+
+    GameObject exellentPrefab;
+    GameObject goodPrefab;
+    GameObject badPrefab;
+
     //constant value
     [SerializeField] private float noteSpeed = 30f;
     private Vector2 initCamTransform;
@@ -15,7 +21,6 @@ public class Note : MonoBehaviour
 
     float time = 0f;
 
-    
     public int NoteState { get; set; }
 
     private enum State
@@ -28,6 +33,11 @@ public class Note : MonoBehaviour
     }
     private void Awake()
     {
+        //component
+        exellentPrefab = Resources.Load<GameObject>("ExellentText");
+        goodPrefab = Resources.Load<GameObject>("GoodText");
+        badPrefab = Resources.Load<GameObject>("BadText");
+
         NoteState = (int)State.None;
         mainCamTransform = GameObject.Find("MainCamera").GetComponent<Transform>();
         initCamTransform = mainCamTransform.position;
@@ -45,7 +55,6 @@ public class Note : MonoBehaviour
             //Debug.Log(Time.time - time); need to check changed note bar
             //music must played together first note alive
             NoteState = (int)State.Exellent;
-
         }
         else if (collision.CompareTag("GoodZone"))
         {
@@ -68,7 +77,7 @@ public class Note : MonoBehaviour
     {
         if (collision.CompareTag("DeadZone"))
         {
-            ObjectPool.Instance.PushObject(gameObject);
+            ObjectPool.Instance.PushObject(gameObject, "meleeNote");
         }
     }
 
@@ -77,13 +86,29 @@ public class Note : MonoBehaviour
         if (this.NoteState == (int)State.Bad)
         {
             //StartCoroutine(camshaking());
+            Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+            ObjectPool.Instance.PopObject(textPosition, badPrefab, "checkBadText");
+
             GameManager.Instance.Combo = 0;
         }
-        else
+        else if (this.NoteState == (int)State.Good)
         {
+            Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+            ObjectPool.Instance.PopObject(textPosition, goodPrefab, "checkGoodText");
+
             GameManager.Instance.Combo++;
         }
-        ObjectPool.Instance.PushObject(gameObject);
+        else if (this.NoteState == (int)State.Exellent)
+        {
+            Vector3 textPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+            ObjectPool.Instance.PopObject(textPosition, exellentPrefab, "checkExText");
+
+            GameManager.Instance.Combo++;
+        }
+        ObjectPool.Instance.PushObject(gameObject, "meleeNote");
     }
 
     //IEnumerator camshaking()

@@ -2194,10 +2194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592e04115ba82264198ee91899ca8265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BPM: 142
-  tempo1: 4
-  tempo2: 4
-  SheetMusicNote: {fileID: 0}
 --- !u!1 &1596803231
 GameObject:
   m_ObjectHideFlags: 0

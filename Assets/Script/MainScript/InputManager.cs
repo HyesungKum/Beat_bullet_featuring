@@ -44,6 +44,7 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.SelectMusicSquence) return;
         InputControll();
 
         timer += Time.deltaTime;
@@ -52,9 +53,9 @@ public class InputManager : MonoBehaviour
             timer = 0f;
         }
 
-
         playerNode.transform.localScale = playerNodeScale + Vector3.one * nodePulseCurve.Evaluate(timer);
 
+        //main key input
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             isPushed = true;
@@ -83,7 +84,7 @@ public class InputManager : MonoBehaviour
             StartCoroutine(UsedRightDodge());
         }
     }
-
+    #region NodeMotion
     IEnumerator UsedRight()
     {
         float Timer = 0f;
@@ -154,6 +155,7 @@ public class InputManager : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
     private void InputControll()
     {
 
@@ -173,10 +175,14 @@ public class InputManager : MonoBehaviour
         {
             if (GameManager.Instance.Pause)
             {
+                Time.timeScale = 1f;
+                Time.fixedDeltaTime = Time.timeScale;
                 GameManager.Instance.Pause = false;
             }
             else
             {
+                Time.timeScale = 0f;
+                Time.fixedDeltaTime = Time.timeScale;
                 GameManager.Instance.Pause = true;
             }
         }
